@@ -1,3 +1,5 @@
+-- This SQL script creates a trigger that performs email validation when the email is updated.
+-- The trigger sets the valid_email attribute based on the validity of the updated email.
 
 DELIMITER //
 
