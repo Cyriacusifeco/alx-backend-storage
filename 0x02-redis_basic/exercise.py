@@ -3,6 +3,33 @@
 import redis
 import uuid
 from typing import Union, Callable
+from functools import wraps
+from typing import Union, Callable, Optional
+
+
+# Define the count_calls decorator
+def count_calls(method: Callable) -> Callable:
+    """
+    Decorator to count the number of times a method is called.
+
+    Args:
+        method: The method to be wrapped.
+
+    Returns:
+        Callable: The wrapped method.
+    """
+
+    @wraps(method)
+    def wrapped(self, *args, **kwargs):
+        """
+        The wrapped method.
+        """
+        key = method.__qualname__
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+
+    return wrapped
+
 
 class Cache:
     """
